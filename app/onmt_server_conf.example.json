@@ -1,0 +1,18 @@
+{
+    "models_root": "./models",
+    "models": [
+        {
+            "id": 100,
+            "model": "gru_037_step_32100.pt",
+            "timeout": 600,
+            "on_timeout": "to_cpu",
+            "load": true,
+            "opt": {
+                "gpu": -1,
+                "beam_size": 5,
+                "max_length": 20,
+                "replace_unk": true
+            }
+        }
+    ],
+}
