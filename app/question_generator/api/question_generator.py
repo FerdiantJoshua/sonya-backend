@@ -19,6 +19,8 @@ class QuestionGenerator:
         self.ner_url = ner_url
         self.onmt_server_url = onmt_server_url
 
+        self.lower = self.model_config['lower']
+
     async def generate(self, text) -> Response:
         sentences = self._preprocess(text)
         model_id = self.model_config['models'][0]['id']
@@ -38,7 +40,7 @@ class QuestionGenerator:
         return result
 
     def _preprocess(self, text: str) -> [str]:
-        preprocessed_sentences = prepare_featured_input(text)
+        preprocessed_sentences = prepare_featured_input(text, self.lower)
         return preprocessed_sentences
 
     def _post_process(self, sentences: [str]) -> str:

@@ -53,6 +53,7 @@ def validate_and_log():
                     response = await function(*args, **kwargs)
                     log['response'] = response.body.decode('utf-8')
                 except Exception as e:
+                    logger.log(logger.ERROR, e, exc_info=True)
                     fname = os.path.split(e.__traceback__.tb_frame.f_code.co_filename)[1]
                     err = '[ERROR] {}:{} {}'.format(fname, e.__traceback__.tb_lineno, e.__class__.__name__)
                     log['response'] = err
