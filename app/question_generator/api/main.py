@@ -16,10 +16,10 @@ class RequestBody(BaseModel):
     text: str
 
 
-def create_app(tokenizer_url: str, onmt_model_config_path: str, pos_url: str, ner_url: str, onmt_server_url: str):
+def create_app(onmt_model_config_path: str, pos_url: str, ner_url: str, onmt_server_url: str):
     app = FastAPI()
 
-    question_generator = QuestionGenerator(tokenizer_url, onmt_model_config_path, pos_url, ner_url, onmt_server_url)
+    question_generator = QuestionGenerator(onmt_model_config_path, pos_url, ner_url, onmt_server_url)
 
     @app.post('/')
     @validate_and_log()
@@ -34,7 +34,6 @@ def create_app(tokenizer_url: str, onmt_model_config_path: str, pos_url: str, ne
     return app
 
 
-tokenizer_url = API_CONFIG['tokenizer_url']
 pos_url = API_CONFIG['pos_url']
 ner_url = API_CONFIG['ner_url']
 onmt_server_host = API_CONFIG['onmt_server_host']
@@ -43,9 +42,8 @@ onmt_server_url_root = API_CONFIG['onmt_server_url_root']
 onmt_model_config_path = API_CONFIG['onmt_server_config']
 onmt_server_url = f'http://{onmt_server_host}:{onmt_server_port}{onmt_server_url_root}/translate'
 
-logger.log(logger.INFO, f'tokenizer_url: {tokenizer_url}')
 logger.log(logger.INFO, f'pos_url: {pos_url}')
 logger.log(logger.INFO, f'ner_url: {ner_url}')
 logger.log(logger.INFO, f'onmt_server_url: {onmt_server_url}')
 
-question_generator_api = create_app(tokenizer_url, onmt_model_config_path, pos_url, ner_url, onmt_server_url)
+question_generator_api = create_app(onmt_model_config_path, pos_url, ner_url, onmt_server_url)

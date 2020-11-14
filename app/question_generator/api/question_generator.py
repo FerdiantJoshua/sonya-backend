@@ -11,10 +11,9 @@ logger = Logger()
 
 
 class QuestionGenerator:
-    def __init__(self, tokenizer_url: str, config_path: str, pos_url: str, ner_url: str, onmt_server_url: str):
+    def __init__(self, config_path: str, pos_url: str, ner_url: str, onmt_server_url: str):
         with open(config_path, 'r') as f_in:
             self.model_config = json.load(f_in)
-        self.tokenizer_url = tokenizer_url
         self.pos_url = pos_url
         self.ner_url = ner_url
         self.onmt_server_url = onmt_server_url
