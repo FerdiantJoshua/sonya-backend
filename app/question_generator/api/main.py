@@ -47,7 +47,5 @@ logger.log(logger.INFO, f'tokenizer_url: {tokenizer_url}')
 logger.log(logger.INFO, f'pos_url: {pos_url}')
 logger.log(logger.INFO, f'ner_url: {ner_url}')
 logger.log(logger.INFO, f'onmt_server_url: {onmt_server_url}')
-if API_CONFIG['log_to_queue']:
-    logger.log(logger.INFO, f'sqs_url: {API_CONFIG["sqs_url"]}')
 
 question_generator_api = create_app(tokenizer_url, onmt_model_config_path, pos_url, ner_url, onmt_server_url)
