@@ -38,7 +38,7 @@ class Logger(object, metaclass=SingletonType):
         if not os.path.isdir(dirname):
             os.mkdir(dirname)
 
-        fileHandler = TimedRotatingFileHandler(dirname + '/log_api', when='midnight')
+        fileHandler = TimedRotatingFileHandler(encoding='utf-8', filename=dirname + '/log_api', when='midnight')
         fileHandler.setFormatter(formatter)
         self._logger.addHandler(fileHandler)
 
