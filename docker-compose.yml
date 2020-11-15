@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  api:
+    container_name: question-generator_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: question-generator_api
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./log:/app/log
+    ports:
+      - "30000:80"
+    restart: unless-stopped
+    command: gunicorn app.normalizer.api.main:normalizer_api --bind=0.0.0.0:30000 -w 2 -k uvicorn.workers.UvicornWorker
+    networks:
+      chatbot:
+        aliases:
+          - question-generator-api
+
+  onmt_server:
+    container_name: question-generator_onmt_server
+    image: question-generator_api
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+        - ./models/onmt:/models
+    command: python app/run_onmt_server.py
+    restart: unless-stopped
+    networks:
+      chatbot:
+        aliases:
+          - question-generator-api
+
+networks:
+  chatbot:
+    external: True
