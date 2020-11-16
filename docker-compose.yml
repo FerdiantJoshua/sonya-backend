@@ -10,6 +10,7 @@ services:
     env_file:
       - .env.docker
     environment:
+      - TZ=Asia/Jakarta
       - PYTHONUNBUFFERED=1
     volumes:
       - ./log:/app/log
@@ -29,6 +30,7 @@ services:
     env_file:
       - .env.docker
     environment:
+      - TZ=Asia/Jakarta
       - PYTHONUNBUFFERED=1
       - ONMT_SERVER_HOST=0.0.0.0
     volumes:
