@@ -8,15 +8,16 @@ services:
       dockerfile: Dockerfile
     image: question-generator_api
     env_file:
-      - .env
+      - .env.docker
     environment:
       - PYTHONUNBUFFERED=1
     volumes:
       - ./log:/app/log
+      - ./models:/app/models
     ports:
       - "30000:80"
     restart: unless-stopped
-    command: gunicorn app.normalizer.api.main:normalizer_api --bind=0.0.0.0:30000 -w 2 -k uvicorn.workers.UvicornWorker
+    command: gunicorn question_generator.api.main:question_generator_api --bind=0.0.0.0:80 -w 2 -k uvicorn.workers.UvicornWorker
     networks:
       chatbot:
         aliases:
@@ -26,12 +27,13 @@ services:
     container_name: question-generator_onmt_server
     image: question-generator_api
     env_file:
-      - .env
+      - .env.docker
     environment:
       - PYTHONUNBUFFERED=1
+      - ONMT_SERVER_HOST=0.0.0.0
     volumes:
-        - ./models/onmt:/models
-    command: python app/run_onmt_server.py
+        - ./models:/app/models
+    command: python run_onmt_server.py
     restart: unless-stopped
     networks:
       chatbot:
